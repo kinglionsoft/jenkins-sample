@@ -4,7 +4,7 @@ pipeline{
         stage("Build"){
             steps{
                 echo "========executing Building========"
-                sh "docker build -t jenkins-sample:1.0 -f ./Dockerfile ../src"
+                sh "docker build -t jenkins-sample:1.0 -f ./Dockerfile ."
             }
             post{
                 always{
