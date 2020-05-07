@@ -1,0 +1,39 @@
+pipeline{
+    agent any   
+    stages{
+        stage("Build"){
+            steps{
+                echo "========executing Building========"
+                sh "docker build -t jenkins-sample:1.0 -f ./Dockerfile ../src"
+            }
+            post{
+                always{
+                    echo "========Building finished========"
+                }
+                success{
+                    echo "========A executed successfully========"
+                }
+                failure{
+                    echo "========A execution failed========"
+                }
+            }
+        }
+        stage("Deploy"){
+            steps{
+                echo "========executing Deployment========"
+                sh "docker run --rm --name jenkins-sample -p 9000:80 jenkins-sample:1.0"
+            }
+        }
+    }
+    post{
+        always{
+            echo "========pipeline finished========"
+        }
+        success{
+            echo "========pipeline executed successfully ========"
+        }
+        failure{
+            echo "========pipeline execution failed========"
+        }
+    }
+}
